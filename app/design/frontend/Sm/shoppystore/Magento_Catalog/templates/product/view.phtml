@@ -1,0 +1,36 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+?>
+
+<?php
+	$_config = $this->helper('Sm\ShoppyStore\Helper\Data');
+	
+?>
+
+<div class="row">
+	<div class="col-lg-6 col-md-6 image-box-detail">
+		<?php echo $block->getChildHtml('product.info.media'); ?>
+	</div>
+	
+	<div class="col-lg-6 col-md-6 info-box-detail">
+		<?php echo $block->getChildHtml('product.info.main'); ?>
+	</div>
+	<div style="clear:both"></div>
+	<div class="details-bottom">
+	<div class="col-lg-3 col-md-3 related-bottom-wrapper">
+	<?php echo $block->getChildHtml('related.product'); ?>
+		
+		
+	</div>
+	<div class="col-lg-9 col-md-9 detail-bottom-wrapper">
+		<?php echo $block->getChildHtml('detail.bottom'); ?>
+		<?php echo $block->getChildHtml('upsell.product'); ?>	
+	</div>	
+	</div>
+	
+</div>
