@@ -45,7 +45,7 @@ class Data extends AbstractHelper
 	 */
 	public function _cleanText($text)
 	{
-		$text = strip_tags($text, '<a><b><blockquote><code><del><dd><dl><dt><em><h1><h2><h3><i><kbd><p><pre><s><sup><strong><strike><br><hr>');
+		$text = (!empty($text))?strip_tags($text, '<a><b><blockquote><code><del><dd><dl><dt><em><h1><h2><h3><i><kbd><p><pre><s><sup><strong><strike><br><hr>'):"";
 		$text = trim($text);
 		return $text;
 	}
@@ -364,7 +364,8 @@ class Data extends AbstractHelper
 						}
 						break;
 					case 'product_description':
-						$text = $helper_cms->getBlockFilter()->filter($helper_output->productAttribute($product, nl2br($product->getDescription()), 'text'));
+						//$text = $helper_cms->getBlockFilter()->filter($helper_output->productAttribute($product, nl2br($product->getDescription()), 'text'));
+						$text = $helper_cms->getBlockFilter()->filter($helper_output->productAttribute($product, (!empty($product->getDescription()))?nl2br($product->getDescription()):'', 'text'));					
 						$inline_images = $this->getInlineImages($text);
 						if (!empty($inline_images)) {
 							for ($i = 0; $i < count($inline_images); $i++) {
