@@ -14,6 +14,7 @@ atlassian*
 /pub/sitemap.xml
 /.idea
 /.gitattributes
+/app/etc/env.php
 /lib/internal/flex/uploader/.actionScriptProperties
 /lib/internal/flex/uploader/.flexProperties
 /lib/internal/flex/uploader/.project
