@@ -200,9 +200,11 @@ if (!empty($list)) {
 									_max_item = $(this);
 								}
 							});
-							$('.item-image img', $element).height(_max_item.height());
+							//$('.item-image img', $element).height((_max_item.height())-200);
+							$('.item-image img', $element).height(215);
 						}
 						<?php /*} */?>
+						//console.log((_max_item.height())-200);
 					}
 
 					$sm_imageslider.on('resized.owl.carousel refreshed.owl.carousel', function () {

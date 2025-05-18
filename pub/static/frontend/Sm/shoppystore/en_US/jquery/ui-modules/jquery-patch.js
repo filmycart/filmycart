@@ -1,0 +1,1 @@
+/var/www/html/fmc-smshop/lib/web/jquery/ui-modules/jquery-patch.js
