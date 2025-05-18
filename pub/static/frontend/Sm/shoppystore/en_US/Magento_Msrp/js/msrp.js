@@ -1,0 +1,1 @@
+/var/www/html/fmc-smshop/vendor/magento/module-msrp/view/base/web/js/msrp.js

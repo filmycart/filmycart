@@ -1,0 +1,1 @@
+/var/www/html/fmc-smshop/app/design/frontend/Sm/shoppystore/Sm_CartQuickPro/web/js/custom-modal.js
