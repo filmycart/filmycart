@@ -1,0 +1,1 @@
+/var/www/html/fmc-smshop/lib/web/mage/smart-keyboard-handler.js
