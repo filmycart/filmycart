@@ -1,7 +1,8 @@
 <?php
 return [
     'backend' => [
-        'frontName' => 'admin_so34gh'
+        //'frontName' => 'admin_so34gh'
+        'frontName' => 'admin_so34gh'        
     ],
     'remote_storage' => [
         'driver' => 'file'
@@ -77,6 +78,6 @@ return [
         'fmc-smshop-local.com'
     ],
     'install' => [
-        'date' => 'Tue, 08 Oct 2024 03:26:18 +0000'
+        'date' => 'Sun, 14 Sep 2025 16:29:36 +0000'
     ]
 ];
