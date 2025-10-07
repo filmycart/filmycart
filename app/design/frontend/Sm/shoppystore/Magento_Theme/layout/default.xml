@@ -34,7 +34,7 @@
 				<block class="Magento\Newsletter\Block\Subscribe" name="popup-newsletter" as="popup-newsletter" template="Magento_Newsletter::subscribe-popup.phtml"/>
 				<!-- <block class="Magento\Customer\Block\Form\Login" name="popup-login" as="popup-login" template="Magento_Customer::form/mini.login.phtml"/>
 				 -->
-				<container name="language-header" label="Language" as="language-header" htmlTag="div" htmlClass="language-wrapper"/>
+				<!-- <container name="language-header" label="Language" as="language-header" htmlTag="div" htmlClass="language-wrapper"/> -->
 				<container name="currency-header" label="Currency" as="currency-header" htmlTag="div" htmlClass="currency-wrapper"/>
 				<container name="logo-header" label="Search" as="logo-header" htmlTag="div" htmlClass="logo-wrapper"/>
 				<container name="search-header" label="Search" as="search-header" htmlTag="div" htmlClass="search-wrapper">
