@@ -229,15 +229,19 @@
                                         @php
                                         $category_name = $category->getTranslation('name');
                                         @endphp
-                                        <div class="col-xl-4 col-md-6  py-3 py-md-2rem category-slide border-right border-bottom">
+                                        <div class="col-xl-6 col-md-8 py-3 py-md-2rem category-slide border-right border-bottom">
                                             <div class="d-sm-flex text-center text-sm-left h-100 ">
                                                 <div class="mb-3">
-                                                    <img src="{{ isset($category->bannerImage->file_name) ? my_asset($category->bannerImage->file_name) : static_asset('assets/img/placeholder.jpg') }}"
+                                                    <a class="text-reset fw-700 fs-14 hov-text-primary"
+                                                            href="{{ route('products.category', $category->slug) }}"
+                                                            title="{{ $category_name }}">
+                                                        <img src="{{ isset($category->bannerImage->file_name) ? my_asset($category->bannerImage->file_name) : static_asset('assets/img/placeholder.jpg') }}"
                                                         class="lazyload w-150px h-auto mx-auto has-transition"
                                                         alt="{{ $category->getTranslation('name') }}"
                                                         onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
+                                                    </a>
                                                 </div>
-                                                <div class="px-2 px-lg-4 flex-grow-1">
+                                                <div class="px-2 px-lg-4 flex-grow-1" style="display:none;">
                                                     <h6 class="text-dark mb-0 text-truncate-2">
                                                         <a class="text-reset fw-700 fs-14 hov-text-primary"
                                                             href="{{ route('products.category', $category->slug) }}"
