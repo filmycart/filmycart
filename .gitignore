@@ -1,12 +1,14 @@
+# Environment variables
 .env
+.env.*
+!.env.example
+
 /bootstrap/compiled.php
 .env.*.php
 .env.php
 
 /node_modules
-#/public/assets
 /public/storage
-#/public/uploads
 /storage/*.key
 /storage/debugbar
 /vendor
@@ -20,7 +22,6 @@ npm-debug.log
 yarn-error.log
 .DS_Store
 .idea/
-#/public/*
 updates/
 composer.lock
 *.lock
@@ -32,6 +33,4 @@ install.zip
 /nbproject
 /public/app-translations
 public/uploads.zip
-.env
 public/all
-
