@@ -143,18 +143,18 @@
     <div class="container">
         <!-- footer logo -->
         <div class="mt-3 mb-4">
-            <a href="{{ route('home') }}" class="d-block">
+            &nbsp;
+            <!-- <a href="{{ route('home') }}" class="d-block">
                 @if(get_setting('footer_logo') != null)
                     <img class="lazyload h-45px" src="{{ static_asset('assets/img/placeholder-rect.jpg') }}" data-src="{{ uploaded_asset(get_setting('footer_logo')) }}" alt="{{ env('APP_NAME') }}" height="45">
                 @else
                     <img class="lazyload h-45px" src="{{ static_asset('assets/img/placeholder-rect.jpg') }}" data-src="{{ static_asset('assets/img/logo.png') }}" alt="{{ env('APP_NAME') }}" height="45">
                 @endif
-            </a>
+            </a> -->
         </div>
         <div class="row">
-            <!-- about & subscription -->
-            
-            <div class="col-xl-6 col-lg-7">
+            <!-- about & subscription -->            
+            <div class="col-xl-8 col-lg-9">
                 <div class="mb-4 text-secondary text-justify">
                     {!! get_setting('about_us_description',null,App::getLocale()) !!}
                 </div>
@@ -179,10 +179,10 @@
             <div class="col d-none d-lg-block"></div>
 
             <!-- Follow & Apps -->
-            <div class="col-xxl-3 col-xl-4 col-lg-4">
+            <div class="col-xxl-1 col-xl-2 col-lg-2">
                 <!-- Social -->
                 @if ( get_setting('show_social_links') )
-                    <h5 class="fs-14 fw-700 text-secondary text-uppercase mt-3 mt-lg-0">{{ translate('Follow Us') }}</h5>
+                    <h5 class="fs-14 fw-700 text-secondary text-uppercase mt-3 mt-lg-0">{{ translate('Social') }}</h5>
                     <ul class="list-inline social colored mb-4">
                         @if (!empty(get_setting('facebook_link')))
                             <li class="list-inline-item ml-2 mr-2">
