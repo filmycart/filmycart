@@ -209,7 +209,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <!-- Description -->
                                 <div class="form-group">
                                     <label class="fs-13">{{translate('Description')}}</label>
