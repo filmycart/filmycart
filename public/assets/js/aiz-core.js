@@ -900,7 +900,7 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                     }
                 });
         },
-        textEditor: function () {
+        /*textEditor: function () {
             $(".aiz-text-editor").each(function (el) {
                 var $this = $(this);
                 var buttons = $this.data("buttons");
@@ -964,7 +964,161 @@ $.fn.toggleAttr = function (attr, attr1, attr2) {
                         return wrap.append(html)[0];
                     };
             });
+        },*/        
+        textEditor: function () {
+            $(".aiz-text-editor").each(function () {
+                var $this = $(this);
+                var buttons = $this.data("buttons");
+                var minHeight = $this.data("min-height");
+                var placeholder = $this.attr("placeholder");
+                var format = $this.data("format");
+
+                buttons = !buttons
+                    ? [
+                        ["style", ["style"]],
+                        ["font", [
+                            "fontname",
+                            "fontsize",
+                            "bold",
+                            "italic",
+                            "underline",
+                            "strikethrough",
+                            "superscript",
+                            "subscript",
+                            "clear"
+                        ]],
+                        ["color", ["color"]],
+                        ["para", [
+                            "ul",
+                            "ol",
+                            "paragraph",
+                            "height"
+                        ]],
+                        ["table", ["table"]],
+                        ["insert", [
+                            "link",
+                            "picture",
+                            "video",
+                            "hr"
+                        ]],
+                        ["view", [
+                            "fullscreen",
+                            "codeview",
+                            "help"
+                        ]],
+                        ["history", [
+                            "undo",
+                            "redo"
+                        ]]
+                    ]
+                    : buttons;
+
+                placeholder = !placeholder ? "" : placeholder;
+                minHeight = !minHeight ? 300 : minHeight;
+                format = typeof format === "undefined" ? false : format;
+
+                // Avoid initializing Summernote more than once
+                if ($this.next(".note-editor").length) {
+                    $this.summernote("destroy");
+                }
+
+                $this.summernote({
+                    toolbar: buttons,
+                    placeholder: placeholder,
+                    disableDragAndDrop: true,
+                    height: minHeight,
+                    tabsize: 4,
+
+                    // Enable font and size dropdowns
+                    fontNames: [
+                        "Arial",
+                        "Arial Black",
+                        "Comic Sans MS",
+                        "Courier New",
+                        "Georgia",
+                        "Helvetica",
+                        "Impact",
+                        "Tahoma",
+                        "Times New Roman",
+                        "Trebuchet MS",
+                        "Verdana"
+                    ],
+
+                    fontNamesIgnoreCheck: [
+                        "Arial",
+                        "Arial Black",
+                        "Comic Sans MS",
+                        "Courier New",
+                        "Georgia",
+                        "Helvetica",
+                        "Impact",
+                        "Tahoma",
+                        "Times New Roman",
+                        "Trebuchet MS",
+                        "Verdana"
+                    ],
+
+                    fontSizes: [
+                        "8", "9", "10", "11", "12", "14",
+                        "16", "18", "20", "22", "24", "28",
+                        "32", "36", "48", "64", "72"
+                    ],
+                    // Keep formatting when pasting, unless format=true
+                    callbacks: {
+                        onImageUpload: function (files) {
+                            // Prevent accidental upload without a server handler.
+                            // Implement an AJAX upload callback if image uploads are needed.
+                        },
+
+                        onPaste: function (e) {
+                            if (format) {
+                                var clipboardData =
+                                    (e.originalEvent || e).clipboardData ||
+                                    window.clipboardData;
+
+                                if (clipboardData) {
+                                    var bufferText =
+                                        clipboardData.getData("text/plain");
+
+                                    e.preventDefault();
+
+                                    document.execCommand(
+                                        "insertText",
+                                        false,
+                                        bufferText
+                                    );
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Preserve responsive video embedding
+                var videoModule = $this.summernote(
+                    "module",
+                    "videoDialog"
+                );
+
+                if (videoModule && !videoModule._customVideoNode) {
+                    var nativeHtmlBuilderFunc = videoModule.createVideoNode;
+
+                    videoModule.createVideoNode = function (url) {
+                        var html = $(nativeHtmlBuilderFunc.call(this, url));
+
+                        html.addClass("embed-responsive-item");
+
+                        var wrap = $(
+                            '<div class="embed-responsive embed-responsive-16by9"></div>'
+                        );
+
+                        return wrap.append(html)[0];
+                    };
+
+                    videoModule._customVideoNode = true;
+                }
+            });
         },
+
         dateRange: function () {
             $(".aiz-date-range").each(function () {
                 var $this = $(this);
