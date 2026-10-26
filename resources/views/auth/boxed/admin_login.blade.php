@@ -7,12 +7,14 @@
                     <div class="row no-gutters">
                         <!-- Left Side Image-->
                         <div class="col-lg-6">
-                            <img src="{{ uploaded_asset(get_setting('admin_login_page_image')) }}" alt="{{ translate('Admin Login Page Image') }}" class="img-fit h-100">
+                            <div class="size-148px mb-3 mx-auto mx-lg-0">
+                                <img src="{{ uploaded_asset(get_setting('admin_login_page_image')) }}" alt="{{ translate('Admin Login Page Image') }}" class="img-fit h-100">
+                            </div>    
                         </div>
 
                         <div class="col-lg-6 p-4 p-lg-5 d-flex flex-column justify-content-center border right-content" style="height: auto;">
                             <!-- Site Icon -->
-                            <div class="size-48px mb-3 mx-auto mx-lg-0">
+                            <div class="size-148px mb-3 mx-auto mx-lg-0">
                                 <img src="{{ uploaded_asset(get_setting('site_icon')) }}" alt="{{ translate('Site Icon')}}" class="img-fit h-100">
                             </div>
 

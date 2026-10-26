@@ -3,7 +3,7 @@
         <div class="aiz-side-nav-logo-wrap">
             <a href="{{ route('admin.dashboard') }}" class="d-block text-left">
                 @if(get_setting('system_logo_black') != null)
-                <img class="mw-100" src="{{ uploaded_asset(get_setting('system_logo_black')) }}" class="brand-icon"
+                <img class="mw-100" style="height:70px;width:240px;" src="{{ uploaded_asset(get_setting('system_logo_black')) }}" class="brand-icon"
                     alt="{{ get_setting('site_name') }}">
                 @else
                 <img class="mw-100" src="{{ static_asset('assets/img/logo.png') }}" class="brand-icon"

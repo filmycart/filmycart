@@ -51,6 +51,7 @@ use App\Http\Controllers\SupportTicketController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\SizeChartController;
+use App\Http\Controllers\Auth\GoogleController;
 
 /*
   |--------------------------------------------------------------------------
@@ -79,6 +80,10 @@ Route::get('/refresh-csrf', function () {
     return csrf_token();
 });
 
+/*Route::get('/social-login/redirect/google', function () {
+    return '';
+});
+*/
 // AIZ Uploader
 Route::controller(AizUploadController::class)->group(function () {
     Route::post('/aiz-uploader', 'show_uploader');
@@ -102,6 +107,16 @@ Route::controller(LoginController::class)->group(function () {
     Route::get('/account-deletion', 'account_deletion')->name('account_delete');
     //Route::get('/handle-demo-login', 'handle_demo_login')->name('handleDemoLogin');
 });
+
+Route::get('/auth/google', [
+    GoogleController::class,
+    'redirect'
+])->name('google.login');
+
+Route::get('/auth/google/callback', [
+    GoogleController::class,
+    'callback'
+])->name('google.callback');
 
 Route::controller(VerificationController::class)->group(function () {
     Route::get('/email/resend', 'resend')->name('verification.resend');

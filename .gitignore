@@ -33,4 +33,4 @@ install.zip
 /nbproject
 /public/app-translations
 public/uploads.zip
-public/all
+public/all.env
