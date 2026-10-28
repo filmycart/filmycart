@@ -37,11 +37,10 @@
                             {{ $category->getTranslation('name') }}
                         </div>
                     </a>
-                    <div class="px-4 py-2">
+                    <!-- <div class="px-4 py-2">
                         <div class="row row-cols-xl-5 row-cols-md-3 row-cols-sm-2 row-cols-1 gutters-16">
                             @foreach ($category->childrenCategories as $key => $child_category)
                                 <div class="col text-left mb-3">
-                                    <!-- Sub Category Name -->
                                     <h6 class="text-dark mb-3">
                                         <a class="text-reset fw-700 fs-14 hov-text-primary"
                                             href="{{ route('products.category', $child_category->slug) }}">
@@ -49,7 +48,6 @@
                                         </a>
                                     </h6>
 
-                                    <!-- Sub-sub Categories -->
                                     <ul
                                         class="mb-2 list-unstyled has-transition mh-100 @if ($child_category->childrenCategories->count() > 5) less @endif">
                                         @foreach ($child_category->childrenCategories as $key => $second_level_category)
@@ -69,7 +67,7 @@
                                 </div>
                             @endforeach
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
             @endforeach
