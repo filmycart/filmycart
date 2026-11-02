@@ -85,7 +85,7 @@
             @endif
             @auth
                 @if (isAdmin())
-                    <hr>
+                    <!-- <hr> -->
                     <li class="mr-0">
                         <a href="{{ route('admin.dashboard') }}"
                             class="fs-13 px-3 py-3 w-100 d-inline-block fw-700 text-dark header_menu_links">
@@ -93,7 +93,7 @@
                         </a>
                     </li>
                 @else
-                    <hr>
+                    <!-- <hr> -->
                     <li class="mr-0">
                         <a href="{{ route('dashboard') }}" class="fs-13 px-3 py-3 w-100 d-inline-block fw-700 text-dark header_menu_links
                                         {{ areActiveRoutes(['dashboard'], ' active') }}">
@@ -121,7 +121,7 @@
                         </a>
                     </li>
                 @endif
-                <hr>
+                <!-- <hr> -->
                 <li class="mr-0">
                     <a href="{{ route('logout') }}"
                         class="fs-13 px-3 py-3 w-100 d-inline-block fw-700 text-primary header_menu_links">
