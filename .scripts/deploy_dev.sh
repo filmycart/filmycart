@@ -7,7 +7,7 @@ git checkout dev
 git pull origin dev
 set -Eeuo pipefail
 
-APP_DIR="/var/www/filmycart.in/public_html"
+APP_DIR="/var/www/dev.filmycart.in/public_html"
 BRANCH="dev"
 PHP_BIN="/usr/bin/php"
 COMPOSER_BIN="/usr/local/bin/composer"
