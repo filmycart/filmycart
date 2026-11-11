@@ -9,6 +9,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    # Select environment based on branch
+    environment: ${{ github.ref_name == 'master' && 'production' || github.ref_name == 'dev' && 'dev' }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -16,12 +19,15 @@ jobs:
       - name: Deploy to Linux Server
         uses: appleboy/ssh-action@v1.2.0
         with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          port: ${{ secrets.SERVER_PORT }}
+          host: ${{ vars.SERVER_HOST }}
+          username: ${{ vars.SERVER_USER }}
+          port: ${{ vars.SERVER_PORT }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           passphrase: ${{ secrets.SERVER_SSH_PASSPHRASE }}
           timeout: 30s
           command_timeout: 10m
           script: |
-            bash /var/www/filmycart.in/public_html/.scripts/deploy.sh
+            cd ${{ vars.DEPLOY_PATH }}
+            git fetch origin ${{ vars.BRANCH_NAME }}
+            git checkout dev
+            git pull origin ${{ vars.BRANCH_NAME }}

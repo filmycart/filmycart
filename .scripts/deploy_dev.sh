@@ -1,6 +1,10 @@
 
 #!/usr/bin/env bash
-
+set -e
+cd /var/www/dev.filmycart.in/public_html
+git fetch origin dev
+git checkout dev
+git pull origin dev
 set -Eeuo pipefail
 
 APP_DIR="/var/www/filmycart.in/public_html"
