@@ -3,7 +3,7 @@ name: Laravel Deploy to Linux Server
 on:
   push:
     branches:
-      - dev
+      - ${{ vars.BRANCH_NAME }}
 
 jobs:
   deploy:
