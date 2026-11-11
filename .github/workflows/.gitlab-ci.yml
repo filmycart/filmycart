@@ -9,6 +9,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    # Select environment based on branch
+    environment: ${{ github.ref_name == 'master' && 'production' || github.ref_name == 'dev' && 'dev' }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -24,4 +27,7 @@ jobs:
           timeout: 30s
           command_timeout: 10m
           script: |
-            bash /var/www/dev.filmycart.in/public_html/.scripts/deploy_dev.sh use dev.filmycart.in "${{ vars.SERVER_PROJECT_FOLDER_NAME }}"
+            cd ${{ vars.DEPLOY_PATH }}
+            git fetch origin ${{ vars.BRANCH_NAME }}
+            git checkout dev
+            git pull origin ${{ vars.BRANCH_NAME }}
