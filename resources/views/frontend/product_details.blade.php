@@ -56,7 +56,7 @@
 @endsection
 
 @section('content')
-    <section class="mb-4 pt-2 gry-bg">
+    <section class="mb-4 pt-2 gry-bg product-detail-page">
         <div class=" col-lg-12">
             <div class="px-1 py-1 px-md-1 py-md-1 bg-white shadow-sm rounded">
                 <div class="d-flex mb-1 align-items-baseline">                        
