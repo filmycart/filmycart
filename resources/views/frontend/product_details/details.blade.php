@@ -496,6 +496,9 @@
 
     <div class="mt-3">
         @if ($detailedProduct->digital == 0)
+        @if ($detailedProduct->stocks->sum('qty') <= 0)
+            <button type="button" class="btn btn-secondary out-of-stock fw-600" disabled aria-disabled="true">{{ translate('Out of Stock') }}</button>
+        @else
         @if (((get_setting('product_external_link_for_seller') == 1) && ($detailedProduct->added_by == "seller") && ($detailedProduct->external_link != null)) ||
         (($detailedProduct->added_by != "seller") && ($detailedProduct->external_link != null)))
         <a type="button" class="btn btn-primary buy-now fw-600 add-to-cart px-4 rounded-0"
@@ -516,6 +519,7 @@
         <button type="button" class="btn btn-secondary out-of-stock fw-600 d-none" disabled>
             <i class="la la-cart-arrow-down"></i> {{ translate('Out of Stock') }}
         </button>
+        @endif
         @elseif ($detailedProduct->digital == 1)
         <button type="button"
             class="btn btn-secondary-base mr-2 add-to-cart fw-600 min-w-150px rounded-0 text-white"
