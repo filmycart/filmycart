@@ -76,5 +76,5 @@ jobs:
             php artisan route:cache
             php artisan view:cache
 
-            echo "Deployment Completed Successfully!"
+            echo "Deployment Completed Successfully."
 
