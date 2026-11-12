@@ -59,9 +59,7 @@ jobs:
 
             # Laravel permissions
             sudo chown -R ${{ vars.SERVER_USER }}:www-data "$DEPLOY_FOLDER_PATH"
-
-            sudo find "$DEPLOY_FOLDER_PATH" -type d -exec chmod 755 {} \;
-            sudo find "$DEPLOY_FOLDER_PATH" -type f -exec chmod 644 {} \;
+            sudo chmod -R 777 "$DEPLOY_FOLDER_PATH"
 
             echo "Deployment Completed Successfully."
 
