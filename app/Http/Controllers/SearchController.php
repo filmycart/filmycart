@@ -73,8 +73,11 @@ class SearchController extends Controller
 
             }
 
-            if ($min_price != null && $max_price != null) {
-                $products->where('unit_price', '>=', $min_price)->where('unit_price', '<=', $max_price);
+            if (is_numeric($min_price)) {
+                $products->where('unit_price', '>=', $min_price);
+            }
+            if (is_numeric($max_price)) {
+                $products->where('unit_price', '<=', $max_price);
             }
 
             if ($query != null) {
@@ -140,8 +143,11 @@ class SearchController extends Controller
             $categories = Category::with('childrenCategories', 'coverImage')->where('level', 0)->orderBy('order_level', 'desc')->get();
         }
 
-        if ($min_price != null && $max_price != null) {
-            $products->where('unit_price', '>=', $min_price)->where('unit_price', '<=', $max_price);
+        if (is_numeric($min_price)) {
+            $products->where('unit_price', '>=', $min_price);
+        }
+        if (is_numeric($max_price)) {
+            $products->where('unit_price', '<=', $max_price);
         }
 
         if ($query != null) {
