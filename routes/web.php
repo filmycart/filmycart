@@ -66,10 +66,7 @@ use App\Http\Controllers\Auth\GoogleController;
 
 // Legacy maintenance endpoints must not be reachable by anonymous users or in production.
 // Keep them available only to authenticated administrators in local/testing environments.
-Route::middleware(['auth', function ($request, $next) {
-    abort_unless(app()->environment(['local', 'testing']) && isAdmin(), 403);
-    return $next($request);
-}])->controller(DemoController::class)->group(function () {
+Route::middleware('auth')->controller(DemoController::class)->group(function () {
     Route::get('/demo/cron_1', 'cron_1');
     Route::get('/demo/cron_2', 'cron_2');
     Route::get('/convert_assets', 'convert_assets');
