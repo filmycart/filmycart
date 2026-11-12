@@ -53,30 +53,6 @@ jobs:
             git reset --hard origin/${{ github.ref_name }}
             git checkout ${{ github.ref_name }}
             git pull origin ${{ github.ref_name }}
-
-            # Install production dependencies if required
-            composer install --no-dev --optimize-autoloader --no-interaction
-
-            # Laravel permissions
-            sudo chown -R ${{ vars.SERVER_USER }}:www-data "$DEPLOY_FOLDER_PATH"
-
-            sudo find "$DEPLOY_FOLDER_PATH" -type d -exec chmod 755 {} \;
-            sudo find "$DEPLOY_FOLDER_PATH" -type f -exec chmod 644 {} \;
-
-            # Writable Laravel directories
-            sudo chown -R ${{ vars.SERVER_USER }}:www-data \
-              "$DEPLOY_FOLDER_PATH/storage" \
-              "$DEPLOY_FOLDER_PATH/bootstrap/cache"
-
-            sudo chmod -R 775 \
-              "$DEPLOY_FOLDER_PATH/storage" \
-              "$DEPLOY_FOLDER_PATH/bootstrap/cache"
-
-            # Laravel cache optimization
-            php artisan optimize:clear
-            php artisan config:cache
-            php artisan route:cache
-            php artisan view:cache
-
+            
             echo "Deployment Completed Successfully."
 
