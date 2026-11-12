@@ -57,8 +57,8 @@
     @php
         $fav_icon = uploaded_asset(get_setting('fav_icon'));
     @endphp
-    <link rel="icon" href="{{ $fav_icon }}">
-    <link rel="apple-touch-icon" href="{{ $fav_icon }}">
+    <link rel="icon" href="{{ $fav_icon ?: static_asset('assets/img/favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ $fav_icon ?: static_asset('assets/img/favicon.ico') }}">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -69,7 +69,7 @@
     @if ($rtl == 1)
         <link rel="stylesheet" href="{{ static_asset('assets/css/bootstrap-rtl.min.css') }}">
     @endif
-    <link rel="stylesheet" href="{{ static_asset('assets/css/aiz-core.css?v=') }}{{ rand(1000, 9999) }}">
+    <link rel="stylesheet" href="{{ static_asset('assets/css/aiz-core.css') }}?v={{ config('app.asset_version', '1') }}">
     <link rel="stylesheet" href="{{ static_asset('assets/css/custom-style.css') }}">
     <script>
         var AIZ = AIZ || {};

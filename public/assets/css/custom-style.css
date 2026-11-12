@@ -439,3 +439,8 @@
     border-width: 2px !important;
     border-color: var(--primary) !important;
 }
+/* QA: keep fixed mobile navigation clear of gesture areas and page content. */
+@media (max-width: 1199.98px) {
+  body { padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)); }
+  .aiz-mobile-bottom-nav { padding-bottom: env(safe-area-inset-bottom, 0px); }
+}

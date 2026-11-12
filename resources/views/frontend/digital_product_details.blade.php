@@ -872,7 +872,7 @@
                         </form>
 
                         <div class="text-center mb-3">
-                            <p class="text-muted mb-0">{{ translate('Dont have an account?')}}</p>
+                            <p class="text-muted mb-0">{{ translate("Don't have an account?")}}</p>
                             <a href="{{ route('registration.verification') }}">{{ translate('Register Now')}}</a>
                             {{-- <a href="{{ route('user.registration') }}">{{ translate('Register Now')}}</a> --}}
                         </div>

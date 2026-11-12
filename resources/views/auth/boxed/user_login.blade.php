@@ -126,7 +126,7 @@
                                     @endif
                                 </div>
                                 <div class="text-center">
-                                    <p class="text-muted mb-0">{{ translate('Dont have an account?')}}</p>
+                                    <p class="text-muted mb-0">{{ translate("Don't have an account?")}}</p>
                                     <a href="{{ route('user.registration') }}">{{ translate('Register Now')}}</a>
                                 </div>
                             </div>
