@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     # Select environment based on branch
-    environment: ${{ github.ref_name == 'master' && 'production' || github.ref_name == 'dev' && 'dev' }}
+    environment: ${{ github.ref_name == 'master' && 'production' || 'dev' }}
 
     steps:
       - name: Checkout code
@@ -25,10 +25,58 @@ jobs:
           port: ${{ vars.SERVER_PORT }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           passphrase: ${{ secrets.SERVER_SSH_PASSPHRASE }}
-          timeout: 30s
+          timeout: 5m
           command_timeout: 10m
           script: |
-            cd ${{ vars.DEPLOY_PATH }}
-            git fetch origin ${{ vars.BRANCH_NAME }}
-            git checkout dev
-            git pull origin ${{ vars.BRANCH_NAME }}
+            set -e
+
+            # Select deployment folder based on branch
+            if [ "${{ github.ref_name }}" = "master" ]; then
+              DEPLOY_FOLDER_PATH="${{ vars.DEPLOY_PATH }}"
+              echo "Deploying to PRODUCTION"
+            elif [ "${{ github.ref_name }}" = "dev" ]; then
+              DEPLOY_FOLDER_PATH="${{ vars.DEPLOY_PATH }}"
+              echo "Deploying to DEVELOPMENT"
+            else
+              echo "Invalid branch"
+              exit 1
+            fi
+
+            echo "Deployment path: $DEPLOY_FOLDER_PATH"
+
+            # Navigate to deployment directory
+            cd "$DEPLOY_FOLDER_PATH"
+
+            # Git deployment
+            git fetch origin ${{ github.ref_name }}
+            # Update working directory
+            git reset --hard origin/${{ github.ref_name }}
+            git checkout ${{ github.ref_name }}
+            git pull origin ${{ github.ref_name }}
+
+            # Install production dependencies if required
+            composer install --no-dev --optimize-autoloader --no-interaction
+
+            # Laravel permissions
+            sudo chown -R ${{ vars.SERVER_USER }}:www-data "$DEPLOY_FOLDER_PATH"
+
+            sudo find "$DEPLOY_FOLDER_PATH" -type d -exec chmod 755 {} \;
+            sudo find "$DEPLOY_FOLDER_PATH" -type f -exec chmod 644 {} \;
+
+            # Writable Laravel directories
+            sudo chown -R ${{ vars.SERVER_USER }}:www-data \
+              "$DEPLOY_FOLDER_PATH/storage" \
+              "$DEPLOY_FOLDER_PATH/bootstrap/cache"
+
+            sudo chmod -R 775 \
+              "$DEPLOY_FOLDER_PATH/storage" \
+              "$DEPLOY_FOLDER_PATH/bootstrap/cache"
+
+            # Laravel cache optimization
+            php artisan optimize:clear
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+
+            echo "Deployment Completed Successfully."
+
