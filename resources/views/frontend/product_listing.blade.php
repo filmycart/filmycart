@@ -338,6 +338,11 @@
                                     @endif
                                 @endif
                             </div>
+                            <div class="d-xl-none p-3 bg-white border-top">
+                                <button type="submit" class="btn btn-primary btn-block" aria-label="{{ translate('Apply filters') }}">
+                                    {{ translate('Apply filters') }}
+                                </button>
+                            </div>
                         </div>
                     </div>
                     
