@@ -53,6 +53,9 @@ jobs:
             git reset --hard origin/${{ github.ref_name }}
             git checkout ${{ github.ref_name }}
             git pull origin ${{ github.ref_name }}
-            
+
+            # Install production dependencies if required
+            composer install --no-dev --optimize-autoloader --no-interaction
+
             echo "Deployment Completed Successfully."
 
