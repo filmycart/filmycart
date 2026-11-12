@@ -38,6 +38,11 @@ class DemoController extends Controller
 {
     public function __construct()
     {
+        $this->middleware(function ($request, $next) {
+            abort_unless(app()->environment(['local', 'testing']) && isAdmin(), 403);
+            return $next($request);
+        });
+
         ini_set('memory_limit', '2048M');
         ini_set('max_execution_time', 600);
 
