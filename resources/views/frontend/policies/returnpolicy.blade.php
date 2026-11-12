@@ -1,31 +1,31 @@
 @extends('frontend.layouts.app')
 
-@section('meta_title'){{ $page->meta_title }}@stop
+@section('meta_title'){{ optional($page)->meta_title ?? translate('Return Policy') }}@stop
 
-@section('meta_description'){{ $page->meta_description }}@stop
+@section('meta_description'){{ optional($page)->meta_description }}@stop
 
-@section('meta_keywords'){{ $page->tags }}@stop
+@section('meta_keywords'){{ optional($page)->tags }}@stop
 
 @section('meta')
     <!-- Schema.org markup for Google+ -->
-    <meta itemprop="name" content="{{ $page->meta_title }}">
-    <meta itemprop="description" content="{{ $page->meta_description }}">
-    <meta itemprop="image" content="{{ uploaded_asset($page->meta_image) }}">
+    <meta itemprop="name" content="{{ optional($page)->meta_title ?? translate('Return Policy') }}">
+    <meta itemprop="description" content="{{ optional($page)->meta_description }}">
+    <meta itemprop="image" content="{{ uploaded_asset(optional($page)->meta_image) }}">
 
     <!-- Twitter Card data -->
     <meta name="twitter:card" content="website">
     <meta name="twitter:site" content="@publisher_handle">
-    <meta name="twitter:title" content="{{ $page->meta_title }}">
-    <meta name="twitter:description" content="{{ $page->meta_description }}">
+    <meta name="twitter:title" content="{{ optional($page)->meta_title ?? translate('Return Policy') }}">
+    <meta name="twitter:description" content="{{ optional($page)->meta_description }}">
     <meta name="twitter:creator" content="@author_handle">
-    <meta name="twitter:image" content="{{ uploaded_asset($page->meta_image) }}">
+    <meta name="twitter:image" content="{{ uploaded_asset(optional($page)->meta_image) }}">
 
     <!-- Open Graph data -->
-    <meta property="og:title" content="{{ $page->meta_title }}" />
+    <meta property="og:title" content="{{ optional($page)->meta_title ?? translate('Return Policy') }}" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="{{ URL($page->slug) }}" />
-    <meta property="og:image" content="{{ uploaded_asset($page->meta_image) }}" />
-    <meta property="og:description" content="{{ $page->meta_description }}" />
+    <meta property="og:url" content="{{ route('returnpolicy') }}" />
+    <meta property="og:image" content="{{ uploaded_asset(optional($page)->meta_image) }}" />
+    <meta property="og:description" content="{{ optional($page)->meta_description }}" />
     <meta property="og:site_name" content="{{ env('APP_NAME') }}" />
 @endsection
 
@@ -36,7 +36,7 @@
             <div class="container text-center">
                 <div class="row">
                     <div class="col-lg-6 text-center text-lg-left">
-                        <h1 class="fw-600 h4">{{ $page->getTranslation('title') }}</h1>
+                        <h1 class="fw-600 h4">{{ $page ? $page->getTranslation('title') : translate('Return Policy') }}</h1>
                     </div>
                     <div class="col-lg-6">
                         <ul class="breadcrumb bg-transparent p-0 justify-content-center justify-content-lg-end">
@@ -54,9 +54,11 @@
         <section class="mb-4">
             <div class="container">
                 <div class="p-4 bg-white rounded shadow-sm overflow-hidden mw-100 text-left">
-                    @php
-                        echo $page->getTranslation('content');
-                    @endphp
+                    @if ($page && trim(strip_tags((string) $page->getTranslation('content'))) !== '')
+                        {!! $page->getTranslation('content') !!}
+                    @else
+                        <p class="mb-2">{{ translate('Return policy information is being updated. Please contact customer support before placing an order if you need clarification about returns or refunds.') }}</p>
+                    @endif
                 </div>
             </div>
         </section>
