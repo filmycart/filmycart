@@ -617,6 +617,17 @@ class HomeController extends Controller
 
         $product_stock = $product->stocks->where('variant', $str)->first();
 
+        if (!$product_stock) {
+            return response()->json([
+                'price' => null,
+                'quantity' => 0,
+                'digital' => $product->digital,
+                'variation' => $str,
+                'max_limit' => 0,
+                'in_stock' => 0,
+            ], 200);
+        }
+
         $price = $product_stock->price;
 
 
@@ -638,7 +649,7 @@ class HomeController extends Controller
 
         //Product Stock Visibility
         if ($product->stock_visibility_state == 'text') {
-            if ($quantity >= 1 && $product->min_qty < $quantity) {
+            if ($quantity >= 1 && $product->min_qty <= $quantity) {
                 $quantity = translate('In Stock');
             } else {
                 $quantity = translate('Out Of Stock');
