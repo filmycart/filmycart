@@ -54,12 +54,12 @@
 
                     <!-- Sidebar Filters -->
                     <div class="col-xl-3">
-                        <div class="aiz-filter-sidebar collapse-sidebar-wrap sidebar-xl sidebar-right z-1035">
+                        <div id="catalog-filter-sidebar" class="aiz-filter-sidebar collapse-sidebar-wrap sidebar-xl sidebar-right z-1035" aria-label="{{ translate('Product filters') }}">
                             <div class="overlay overlay-fixed dark c-pointer" data-toggle="class-toggle" data-target=".aiz-filter-sidebar" data-same=".filter-sidebar-thumb"></div>
                             <div class="collapse-sidebar c-scrollbar-light text-left">
                                 <div class="d-flex d-xl-none justify-content-between align-items-center pl-3 border-bottom">
                                     <h3 class="h6 mb-0 fw-600">{{ translate('Filters') }}</h3>
-                                    <button type="button" class="btn btn-sm p-2 filter-sidebar-thumb" data-toggle="class-toggle" data-target=".aiz-filter-sidebar" >
+                                    <button type="button" class="btn btn-sm p-2 filter-sidebar-thumb" aria-label="{{ translate('Close filters') }}" data-toggle="class-toggle" data-target=".aiz-filter-sidebar" >
                                         <i class="las la-times la-2x"></i>
                                     </button>
                                 </div>
@@ -229,8 +229,9 @@
                                                     data-range-value-max="@if($product_count < 1) 0 @else {{ get_product_max_unit_price() }} @endif"
                                                 ></div>
 
-                                                <div class="row mt-2">
+                                                <div class="row mt-2 catalog-price-values">
                                                     <div class="col-6">
+                                                        <span class="d-block fs-12 text-secondary">{{ translate('Minimum') }}</span>
                                                         <span class="range-slider-value value-low fs-14 fw-600 opacity-70"
                                                             @if (isset($min_price))
                                                                 data-range-value-low="{{ $min_price }}"
@@ -243,6 +244,7 @@
                                                         ></span>
                                                     </div>
                                                     <div class="col-6 text-right">
+                                                        <span class="d-block fs-12 text-secondary">{{ translate('Maximum') }}</span>
                                                         <span class="range-slider-value value-high fs-14 fw-600 opacity-70"
                                                             @if (isset($max_price))
                                                                 data-range-value-high="{{ $max_price }}"
@@ -266,7 +268,7 @@
                                     @foreach ($attributes as $attribute)
                                         <div class="bg-white border mb-2">
                                             <div class="fs-16 fw-700 p-3">
-                                                <a href="#" class="dropdown-toggle text-dark filter-section collapsed d-flex align-items-center justify-content-between" 
+                                                <a href="#" class="dropdown-toggle text-dark filter-section {{ $show === 'show' ? '' : 'collapsed' }} d-flex align-items-center justify-content-between" 
                                                     data-toggle="collapse" data-target="#collapse_{{ str_replace(' ', '_', $attribute->name) }}" style="white-space: normal;">
                                                     {{ $attribute->getTranslation('name') }}
                                                 </a>
@@ -401,6 +403,23 @@
                             @endif
                         </ul>
                         
+                        @if(request()->filled('keyword') || request()->filled('min_price') || request()->filled('max_price') || request()->filled('color') || request()->filled('sort_by') || count((array) request()->input('selected_attribute_values', [])) > 0)
+                            <div class="mb-3 d-flex flex-wrap align-items-center catalog-active-filters">
+                                <span class="mr-2 fw-600">{{ translate('Active filters') }}:</span>
+                                @foreach(['keyword', 'min_price', 'max_price', 'sort_by'] as $filterKey)
+                                    @if(request()->filled($filterKey))
+                                        <span class="badge badge-light border mr-2 mb-1">{{ ucfirst(str_replace('_', ' ', $filterKey)) }}: {{ request()->input($filterKey) }}</span>
+                                    @endif
+                                @endforeach
+                                @foreach((array) request()->input('selected_attribute_values', []) as $selectedValue)
+                                    <span class="badge badge-light border mr-2 mb-1">{{ $selectedValue }}</span>
+                                @endforeach
+                                @if(request()->filled('color'))
+                                    <span class="badge badge-light border mr-2 mb-1">{{ translate('Color') }}: {{ request()->input('color') }}</span>
+                                @endif
+                                <a href="{{ route('search') }}" class="fs-13">{{ translate('Clear filters') }}</a>
+                            </div>
+                        @endif
                         <!-- Top Filters -->
                         <div class="text-left">
                             <div class="row gutters-5 flex-wrap align-items-center">
@@ -417,13 +436,13 @@
                                     <input type="hidden" name="keyword" value="{{ $query }}">
                                 </div>
                                 <div class="col-2 col-lg-auto d-xl-none mb-lg-3 text-right">
-                                    <button type="button" class="btn btn-icon p-0" data-toggle="class-toggle" data-target=".aiz-filter-sidebar">
+                                    <button type="button" class="btn btn-icon p-0" aria-label="{{ translate('Open filters') }}" aria-controls="catalog-filter-sidebar" data-toggle="class-toggle" data-target=".aiz-filter-sidebar">
                                         <i class="la la-filter la-2x"></i>
                                     </button>
                                 </div>
 
-                                <div class="col-6 col-lg-auto mb-3 w-lg-200px">
-                                    <select class="form-control form-control-sm aiz-selectpicker rounded-0" name="sort_by" onchange="filter()">
+                                <div class="col-12 col-sm-6 col-lg-auto mb-3 w-lg-200px catalog-sort">
+                                    <select aria-label="{{ translate('Sort products') }}" class="form-control form-control-sm aiz-selectpicker rounded-0" name="sort_by" onchange="filter()">
                                         <option value="">{{ translate('Sort by')}}</option>
                                         <option value="newest" @isset($sort_by) @if ($sort_by == 'newest') selected @endif @endisset>{{ translate('Newest')}}</option>
                                         <option value="oldest" @isset($sort_by) @if ($sort_by == 'oldest') selected @endif @endisset>{{ translate('Oldest')}}</option>
@@ -435,7 +454,14 @@
                         </div>
                         
                         <!-- Products -->
-                        <div class="px-3">
+                        @if($products->count() === 0)
+                            <div class="alert alert-light border text-center py-5" role="status">
+                                <h2 class="h5">{{ translate('No products found') }}</h2>
+                                <p class="mb-3">{{ translate('Try adjusting your filters or search keywords.') }}</p>
+                                <a href="{{ route('search') }}" class="btn btn-primary">{{ translate('View all products') }}</a>
+                            </div>
+                        @endif
+                        <div class="px-2 px-md-3 catalog-results">
                             <div class="row gutters-16 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-4 row-cols-md-3 row-cols-2">
                                 @foreach ($products as $key => $product)
                                     @if(isset($product_type) && $product_type == 'preorder_product')
@@ -446,7 +472,7 @@
                                 @endforeach
                             </div>
                         </div>
-                        <div class="aiz-pagination mt-4">
+                        <div class="aiz-pagination mt-4 catalog-pagination" aria-label="{{ translate('Product pages') }}">
                             {{ $products->appends(request()->input())->links() }}
                         </div>
                     </div>
