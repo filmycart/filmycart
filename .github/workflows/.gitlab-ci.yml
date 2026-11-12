@@ -56,8 +56,6 @@ jobs:
 
             # Install production dependencies if required
             composer install --no-dev --optimize-autoloader --no-interaction
-            composer update
-            composer dump-autoload
 
             # Laravel permissions
             sudo chown -R ${{ vars.SERVER_USER }}:www-data "$DEPLOY_FOLDER_PATH"
