@@ -49,6 +49,8 @@ jobs:
 
             # Git deployment
             git fetch origin ${{ github.ref_name }}
+            # Update working directory
+            git reset --hard origin/${{ github.ref_name }}
             git checkout ${{ github.ref_name }}
             git pull origin ${{ github.ref_name }}
 
