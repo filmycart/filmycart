@@ -57,9 +57,5 @@ jobs:
             # Install dependencies
             composer install --no-dev --optimize-autoloader --no-interaction
 
-            # Laravel permissions
-            sudo chown -R "${{ vars.SERVER_USER }}":www-data "$DEPLOY_FOLDER_PATH"
-            sudo chmod -R 777 "$DEPLOY_FOLDER_PATH"
-
             echo "Deployment Completed Successfully."
 
