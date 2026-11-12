@@ -268,7 +268,7 @@
                                     @foreach ($attributes as $attribute)
                                         <div class="bg-white border mb-2">
                                             <div class="fs-16 fw-700 p-3">
-                                                <a href="#" class="dropdown-toggle text-dark filter-section {{ $show === 'show' ? '' : 'collapsed' }} d-flex align-items-center justify-content-between" 
+                                                <a href="#" class="dropdown-toggle text-dark filter-section d-flex align-items-center justify-content-between" 
                                                     data-toggle="collapse" data-target="#collapse_{{ str_replace(' ', '_', $attribute->name) }}" style="white-space: normal;">
                                                     {{ $attribute->getTranslation('name') }}
                                                 </a>
