@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <section class="my-4 gry-bg">
+    <section class="my-4 gry-bg mobile-checkout-page">
         <div class="container">
             <div class="row cols-xs-space cols-sm-space cols-md-space">
                 <div class="col-lg-8 mx-auto">
