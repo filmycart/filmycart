@@ -25,7 +25,7 @@ jobs:
           port: ${{ vars.SERVER_PORT }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           passphrase: ${{ secrets.SERVER_SSH_PASSPHRASE }}
-          timeout: 30s
+          timeout: 5m
           command_timeout: 10m
           script: |
             set -e
