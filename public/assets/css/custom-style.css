@@ -485,3 +485,51 @@
         min-width: 0;
     }
 }
+
+/* Mobile QA: preserve usable checkout controls and avoid horizontal overflow. */
+.mobile-checkout-page .card,
+.mobile-checkout-page .card-body,
+.mobile-checkout-page .form-group {
+    min-width: 0;
+}
+.mobile-checkout-page input:not([type="checkbox"]):not([type="radio"]),
+.mobile-checkout-page select,
+.mobile-checkout-page textarea {
+    max-width: 100%;
+    font-size: 16px;
+}
+.mobile-checkout-page .card-body img,
+.mobile-checkout-page .card-body iframe {
+    max-width: 100%;
+}
+.mobile-checkout-page .table-responsive {
+    max-width: 100%;
+    overflow-x: auto;
+}
+@media (max-width: 767.98px) {
+    .mobile-checkout-page .card-header {
+        min-height: 44px;
+    }
+    .mobile-checkout-page .btn,
+    .mobile-checkout-page button[type="submit"] {
+        min-height: 44px;
+        white-space: normal;
+    }
+    .product-detail-page .product-gallery,
+    .product-detail-page .product-gallery-thumb {
+        touch-action: pan-y pinch-zoom;
+    }
+    .product-detail-page .product-quantity button,
+    .product-detail-page .product-quantity .btn {
+        min-width: 44px;
+        min-height: 44px;
+    }
+    .product-detail-page .add-to-cart,
+    .product-detail-page .buy-now {
+        min-height: 44px;
+    }
+    .mobile-checkout-page .row,
+    .product-detail-page .row {
+        min-width: 0;
+    }
+}
