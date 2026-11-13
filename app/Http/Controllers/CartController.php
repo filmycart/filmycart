@@ -102,6 +102,21 @@ class CartController extends Controller
         $str = CartUtility::create_cart_variant($product, $request->all());
         $product_stock = $product->stocks->where('variant', $str)->first();
 
+        // Validate the requested variant and inventory before creating or updating a cart.
+        if (!$product_stock || ($product->digital == 0 && (
+            !is_numeric($request->quantity) ||
+            (int) $request->quantity != $request->quantity ||
+            $request->quantity < 1 ||
+            $product_stock->qty < (int) $request->quantity
+        ))) {
+            return array(
+                'status' => 0,
+                'cart_count' => count($carts),
+                'modal_view' => view('frontend.partials.outOfStockCart')->render(),
+                'nav_cart_view' => view('frontend.partials.cart.cart')->render(),
+            );
+        }
+
         if($authUser != null) {
             $user_id = $authUser->id;
             $cart = Cart::firstOrNew([
@@ -186,7 +201,10 @@ class CartController extends Controller
 
         if ($cartItem['id'] == $request->id) {
             $product = Product::find($cartItem['product_id']);
-            $product_stock = $product->stocks->where('variant', $cartItem['variation'])->first();
+            $product_stock = $product ? $product->stocks->where('variant', $cartItem['variation'])->first() : null;
+            if (!$product_stock || !is_numeric($request->quantity) || (int) $request->quantity != $request->quantity || $request->quantity < 1 || ($product->digital == 0 && $product_stock->qty < (int) $request->quantity)) {
+                return response()->json(['status' => 0, 'message' => translate('Requested quantity is not available')], 422);
+            }
             $quantity = $product_stock->qty;
             $price = $product_stock->price;
 
