@@ -151,6 +151,17 @@ class CheckoutController extends Controller
         $user = auth()->user();
         $carts = Cart::where('user_id', $user->id)->active()->get();
 
+        // Revalidate selected variants immediately before order creation.
+        // The order writer must also lock and decrement stock atomically.
+        foreach ($carts as $cartItem) {
+            $product = Product::with('stocks')->find($cartItem->product_id);
+            $stock = $product ? $product->stocks->firstWhere('variant', $cartItem->variation) : null;
+            if (!$product || !$stock || $cartItem->quantity < 1 ||
+                ($product->digital == 0 && ($cartItem->quantity < $product->min_qty || $stock->qty < $cartItem->quantity))) {
+                flash(translate('A product in your cart is unavailable or has insufficient stock. Please update your cart.'))->warning();
+                return redirect()->route('cart');
+            }
+        }
 
         // Minumum order amount check
         if(get_setting('minimum_order_amount_check') == 1){
